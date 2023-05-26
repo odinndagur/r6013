@@ -74,7 +74,7 @@ function App() {
                 <ThemeContext.Provider value={currentTheme}>
                     <Router
                         location={reactLocation}
-                        basepath="itm-dev"
+                        basepath="r6013"
                         // defaultLinkPreloadMaxAge={Infinity}
                         // defaultPendingElement={<PlaceholderScreen />}
                         // defaultLoaderMaxAge={Infinity}
