@@ -16,8 +16,8 @@ export default defineConfig({
             },
             base: '/r6013/',
             manifest: {
-                name: 'Íslenskt táknmál',
-                short_name: 'ÍTM',
+                name: 'R6013',
+                short_name: 'R6013',
                 start_url: '/r6013/',
                 display: 'standalone',
                 theme_color: '#FFFFFF',
