@@ -273,7 +273,7 @@ function SignPage() {
                                 <h3>Handform</h3>
                                 <img
                                     className="handform-img"
-                                    src={`/itm-dev/assets/itm-images/handform/${sign.handform}.png`}
+                                    src={`/r6013/assets/itm-images/handform/${sign.handform}.png`}
                                 />
                                 <div>{sign.handform}</div>
                             </Link>

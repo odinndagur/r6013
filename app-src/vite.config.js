@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: '/itm-dev/',
+    base: '/r6013/',
     plugins: [
         react({
             include: '**/*.tsx',
@@ -14,11 +14,11 @@ export default defineConfig({
             devOptions: {
                 enabled: true,
             },
-            base: '/itm-dev/',
+            base: '/r6013/',
             manifest: {
                 name: 'Íslenskt táknmál',
                 short_name: 'ÍTM',
-                start_url: '/itm-dev/',
+                start_url: '/r6013/',
                 display: 'standalone',
                 theme_color: '#FFFFFF',
                 background_color: '#FFFFFF',
@@ -56,7 +56,7 @@ export default defineConfig({
                 ],
             },
 
-            // manifestFilename:'/itm-dev/manifest.webmanifest',
+            // manifestFilename:'/r6013/manifest.webmanifest',
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
                 // globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
