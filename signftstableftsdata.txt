@@ -1,0 +1,7 @@
+INSERT INTO sign_fts (id, phrase, related_signs)
+SELECT s.id, s.phrase, group_concat(r.phrase)
+from sign as s
+left join sign_related on s.id = sign_related.sign_id
+left join sign as r
+on sign_related.related_id = r.id
+group by s.id;

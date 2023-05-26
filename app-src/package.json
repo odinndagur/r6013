@@ -1,0 +1,43 @@
+{
+    "name": "itm-dev",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+	"deploy": "./deploy.sh"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@headlessui/react": "^1.7.14",
+        "@jlongster/sql.js": "^1.6.7",
+        "@tanstack/react-location": "^3.7.4",
+        "@tanstack/react-location-devtools": "^3.4.4",
+        "@tanstack/react-query": "^4.29.1",
+        "@tanstack/react-query-devtools": "^4.29.1",
+        "absurd-sql": "^0.0.46",
+        "express": "^4.18.2",
+        "promise-worker": "^2.0.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-youtube": "^10.1.0",
+        "usehooks-ts": "^2.9.1"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.29",
+        "@types/react-dom": "^18.0.11",
+        "@vitejs/plugin-react": "^3.1.0",
+        "prettier": "2.8.7",
+        "typescript": "^5.0.2",
+        "vite": "^4.2.0",
+        "vite-plugin-pwa": "^0.14.7"
+    },
+    "overrides": {
+        "@tanstack/react-location-devtools": {
+            "@tanstack/react-location": "^3.7.4"
+        }
+    }
+}

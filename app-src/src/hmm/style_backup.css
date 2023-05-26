@@ -1,0 +1,211 @@
+:root {
+    --background-color-light: #fff;
+    --background-color-dark: #212121;
+
+    --background-color-active: rgba(0, 0, 0, 0.1);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+}
+
+@media screen and (max-width: 767px) {
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+html,
+body {
+    margin: auto;
+    padding-right: env(safe-area-inset-right, 0.3rem);
+    padding-left: env(safe-area-inset-left, 0.3rem);
+    height: calc(100% + env(safe-area-inset-bottom));
+    width: calc(min(100%, 800px));
+}
+
+.container {
+    height: 100%;
+    /* display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: space-between; */
+    /* overflow-y: auto; */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* #signs {
+    overflow-y: auto;
+    height: 100%;
+  } */
+
+header {
+    position: sticky;
+    text-align: center;
+    padding-top: calc(env(safe-area-inset-top, 3rem) + 1em);
+    padding-bottom: 2rem;
+    /* padding-bottom: env(safe-area-inset-bottom,0.3rem);
+    padding-right: env(safe-area-inset-right,0.3rem);
+    padding-left: env(safe-area-inset-left,0.3rem); */
+    top: 0;
+    /* flex-shrink: 0; */
+    /* margin: 2rem 1rem; */
+    background-color: var(--background-color-light);
+}
+
+.body::-webkit-scrollbar {
+    display: none;
+}
+
+.heading {
+    text-align: center;
+    /* color:#000; */
+    font-family: 'Faustina';
+    font-size: 30pt;
+    font-style: italic;
+    padding: 1rem 1rem;
+}
+
+.sign-search {
+    padding-top: 0.5rem;
+    width: 80%;
+    margin: auto;
+}
+
+#search-input {
+    background-color: var(--background-color-light);
+    border-radius: 2rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid black;
+}
+
+.sign {
+    /* display: block; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    text-align: left;
+    border-radius: 1em;
+    padding: 0.5rem;
+    -webkit-box-shadow: 5px 5px 15px -8px #000000;
+    box-shadow: 5px 5px 15px -8px rgba(80, 80, 80, 0.3);
+}
+
+.list-item {
+    /* display: block; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    text-align: left;
+    border-radius: 1em;
+    padding: 0.5rem;
+    -webkit-box-shadow: 5px 5px 15px -8px #000000;
+    box-shadow: 5px 5px 15px -8px rgba(80, 80, 80, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .sign:hover {
+        /* background-color: rgba(80,80,80,0.3); */
+        background-color: var(--background-color-active);
+        text-decoration: underline;
+    }
+
+    .list-item:hover {
+        /* background-color: rgba(80,80,80,0.3); */
+        background-color: var(--background-color-active);
+        text-decoration: underline;
+    }
+}
+
+.selected {
+    background-color: var(--background-color-active);
+    text-decoration: underline;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: calc(100% - 1rem);
+    width: calc(100% - 1rem);
+    padding: 0.5rem;
+    position: absolute;
+}

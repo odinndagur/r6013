@@ -1,0 +1,9 @@
+.sign-wiki-credits {
+    font-size: 1rem;
+    /* position: fixed;
+    bottom: 0; */
+    padding-bottom: calc(var(--navbar-padding-bottom));
+    text-align: center;
+    width: 100%;
+    /* margin: auto; */
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Faustina' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  <script async defer src="./dist/bundle.js"></script>
+  <title>Artists</title>
+</head>
+<body onload="updateSearch()">
+
+  <div class="container">
+    <header class="header">
+        <div id="heading">R6014</div>
+        <nav>
+          <a href="./">home</a>
+          <a href="shows.html">shows</a>
+          <a href="artists.html" class="current-navitem">artists</a>        
+        </nav>
+        <div id="artist-search">
+        <input type="text" oninput="updateSearch()" onsubmit="updateSearch()" id="search-input">
+        </div>
+      </header>
+
+    <div class="body">
+      <div class="artists"></div>
+    </div>
+
+
+  </div>
+
+  
+</body>
+
+
+
+<script type="module" src="initDB.js"></script>
+
+<script async defer src="artists.js"></script>
+
+<script async defer>
+let params = {}
+  window.location.search.substring(1).split('&').forEach(temp => {
+      const [param, value] = temp.split('=')
+      params[param] = value
+})
+</script>
+
+<style>
+.artist {
+  display: block;
+  /* padding: 0.5rem 0.5rem;
+  margin-bottom: 0.5rem; */
+  text-align: left;
+  /* background-color: rgba(180,80,80,0.4); */
+  border-radius: 1em;
+  padding: 0.5rem;
+  -webkit-box-shadow: 5px 5px 15px -8px #000000; 
+box-shadow: 5px 5px 15px -8px rgba(80,80,80,0.3);
+}
+
+.artist:hover {
+background-color: rgba(80,80,80,0.3);
+}
+.artist-name {
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: 1.1rem;
+padding: 0.5rem 0;
+}
+
+.artist-name>a {
+font-style: normal !important;
+}
+</style>
+</html>

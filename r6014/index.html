@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Faustina' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  <!-- <script async defer src="./dist/bundle.js"></script> -->
+  <title>Shows</title>
+</head>
+<body onload="updateSearch()">
+
+  <div class="container">
+    <header class="header">
+        <div id="heading">R6014</div>
+        <!-- <nav>
+          <a href="./">home</a>
+          <a href="shows.html" class="current-navitem">shows</a>
+          <a href="artists.html">artists</a>        
+        </nav> -->
+        <div id="video-search">
+        <input type="text" oninput="updateSearch()" onsubmit="updateSearch()" id="search-input">
+        </div>
+      </header>
+
+    <div class="body">
+      <div class="videos"></div>
+      <div class="current-video"></div>
+    </div>
+
+  </div>
+
+  
+</body>
+
+
+
+
+
+<!-- <script type="module">
+  import { load } from "./dist/sql-httpvfs.js";
+  window.loadDB = load
+
+  window.loadDB('/r6014search/r6014-fts.sqlite3').then(db => {
+    window.db = db.db
+  })
+</script> -->
+
+<script type="module" src="initDB.js"></script>
+
+<script async defer src="shows.js"></script>
+</html>

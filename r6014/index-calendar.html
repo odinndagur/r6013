@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Faustina' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  <title>R6014</title>
+  <body>
+
+  <div class="container">
+    <header class="header">
+        <div id="heading">R6014</div>
+        <nav>
+          <a href="./" class="current-navitem">home</a>
+          <a href="shows.html">shows</a>
+          <a href="artists.html">artists</a>        
+        </nav>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@0.15.3/event-calendar.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@0.15.3/event-calendar.min.js"></script>
+      </header>
+
+    <div class="body">
+
+     <div class="calendar-parent">
+       <div id="calendar"></div>
+     </div>
+    </div>
+
+
+
+
+  </div>
+
+
+</body>
+
+
+<script type="module" src="initDB.js">
+</script>
+
+<script async defer src="index.js">
+</script>
+
+<script>
+let ec = new EventCalendar(document.getElementById('calendar'), {
+    view: 'dayGridMonth',
+    dateClick: setDate,
+    events: [
+        // your list of events
+    ],
+});
+
+function setDate(info){
+  console.log(info)
+}
+</script>
+
+<style>
+  #calendar {
+    width: 100%;
+  }
+
+  .calendar-parent {
+    display: block;
+    margin: 4rem 2rem;
+    transform: scale(0.8);
+  }
+</style>
+</html>

@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS "sign_collection" (
+	"sign_id"	INTEGER,
+	"collection_id"	INTEGER,
+	"date_added"	NUMERIC,
+	PRIMARY KEY("sign_id","collection_id"),
+	FOREIGN KEY("sign_id") REFERENCES "sign"("id"),
+	FOREIGN KEY("collection_id") REFERENCES "collection"("id")
+);
+CREATE TABLE IF NOT EXISTS "user" (
+	"id"	INTEGER,
+	"name"	TEXT NOT NULL UNIQUE,
+	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "sign_related" (
+	"sign_id"	INTEGER,
+	"related_id"	INTEGER,
+	FOREIGN KEY("related_id") REFERENCES "sign"("id"),
+	FOREIGN KEY("sign_id") REFERENCES "sign"("id")
+);
+CREATE TABLE IF NOT EXISTS "collection" (
+	"id"	INTEGER,
+	"user_id"	INTEGER,
+	"name"	INTEGER,
+	PRIMARY KEY("id"),
+	FOREIGN KEY("user_id") REFERENCES "user"("id")
+);
+CREATE TABLE IF NOT EXISTS "sign" (
+	"id"	INTEGER,
+	"phrase"	TEXT NOT NULL,
+	"youtube_id"	TEXT,
+	"youtube_link"	TEXT,
+	PRIMARY KEY("id")
+);
