@@ -3,16 +3,16 @@ const RUNTIME = 'runtime'
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-    '/r6013/index.html',
-    '/r6013/',
-    // '/r6013/style.css',
-    '/r6013/assets/manifest.webmanifest',
-    '/r6013/assets/sql-wasm.js',
-    '/r6013/assets/sql-wasm.wasm',
-    '/r6013/assets/sign_tables.txt',
-    '/r6013/assets/sign_db_data.txt',
-    '/r6013/assets/signftstableftsdata.txt',
-    // '/r6013/src_index_worker_js.js',
+    '/itm-dev/index.html',
+    '/itm-dev/',
+    // '/itm-dev/style.css',
+    '/itm-dev/assets/manifest.webmanifest',
+    '/itm-dev/assets/sql-wasm.js',
+    '/itm-dev/assets/sql-wasm.wasm',
+    '/itm-dev/assets/sign_tables.txt',
+    '/itm-dev/assets/sign_db_data.txt',
+    '/itm-dev/assets/signftstableftsdata.txt',
+    // '/itm-dev/src_index_worker_js.js',
 ]
 
 // The install handler takes care of precaching the resources we always need.

@@ -33,7 +33,7 @@ export function SignCollectionItem({
             <Link
                 draggable
                 className=""
-                to={`/r6013/signs/${sign.sign_id}`}
+                to={`/itm-dev/signs/${sign.sign_id}`}
                 search={(search) => ({
                     lastSearch: {
                         ...search,

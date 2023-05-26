@@ -5,13 +5,13 @@ import { ThemeContext } from './ThemeContext'
 export function HomePage() {
     const currentTheme = useContext(ThemeContext)
     const [img, setImg] = useState(
-        '/r6013/assets/images/manifest-icon-512.maskable.png'
+        '/itm-dev/assets/images/manifest-icon-512.maskable.png'
     )
     useEffect(() => {
         setImg(
             currentTheme == 'light'
-                ? '/r6013/assets/images/manifest-icon-512.maskable.png'
-                : '/r6013/assets/images/manifest-icon-dark-512.maskable.png'
+                ? '/itm-dev/assets/images/manifest-icon-512.maskable.png'
+                : '/itm-dev/assets/images/manifest-icon-dark-512.maskable.png'
         )
     }, [currentTheme])
     console.log(currentTheme)

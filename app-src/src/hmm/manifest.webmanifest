@@ -1,7 +1,7 @@
 {
     "name": "Íslenskt táknmál",
     "short_name": "ÍTM",
-    "start_url": "/r6013/",
+    "start_url": "/itm-dev/",
     "display": "standalone",
     "theme_color": "#FFFFFF",
     "background_color": "#FFFFFF",

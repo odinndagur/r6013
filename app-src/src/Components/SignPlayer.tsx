@@ -64,7 +64,7 @@ export function SignPlayer(props: any) {
             // playsinline: isSafari ? 0 : 1,
             controls: 1,
             // fullscreen: 1,
-            // origin: 'https://odinndagur.github.io/r6013/',
+            // origin: 'https://odinndagur.github.io/itm-dev/',
             origin: window.location.pathname,
         },
     }
@@ -146,4 +146,4 @@ export function SignPlayer(props: any) {
         </>
     )
 }
-// ?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/r6013/
+// ?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/itm-dev/
