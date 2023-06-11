@@ -1,74 +1,63 @@
 import { Listbox } from '@headlessui/react'
-import { addSignToCollection } from '../db'
+import { addSignToCollection, createCollection } from '../db'
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-location'
 export function AddSignToCollection({
     id,
+    sign,
     collections,
     zIndex,
+    centered
 }: {
     id: number
+    sign: any
     collections: { id: number; name: string }[]
     zIndex?: number
+    centered?:boolean
 }) {
-    const [icon, setIcon] = useState('add')
+    const [updateKey, setUpdateKey] = useState(0)
+    const queryClient = useQueryClient()
+    const navigate = useNavigate()
+    // const [icon, setIcon] = useState('add')
+    const [icons, setIcons] = useState(Object.fromEntries(collections.map(collection => {
+        return [collection.id, sign.collections.includes(collection.id) ? 'check' : 'add']
+    })))
+    // console.log(icons)
     return (
-        <div style={{ zIndex: zIndex ?? undefined }}>
-            <div className="">
-                <Listbox value={'nett'}>
-                    <div className="">
+                <Listbox multiple>
                         <Listbox.Button
-                            className="button-17"
                             style={{
-                                // borderRadius: '10px',
-                                backgroundColor: 'var(--secondary-color)',
                                 maxWidth: '2rem',
                             }}
-                            onClick={(ev) => {
-                                // ev.stopPropagation()
-                                // return null
-                            }}
                         >
-                            <span className="material-icons">{icon}</span>
+                            <span className="material-icons">add</span>
                         </Listbox.Button>
-                        {/* <Transition
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        > */}
                         <Listbox.Options
+                        as={'ul'}
                             style={{
+                                padding:0,
+                                margin:0,
                                 position: 'absolute',
-                                width: 'fit-content',
-                                transform: 'translateX(-100%)',
+                                width: '10rem',
+                                transform: !centered ? 'translateX(-100%)' : 'translate(5rem,60%)',
                                 zIndex: 9999,
-
-                                // flexDirection: 'column',
-                                // alignSelf: 'center',
-                                // padding: '0 1rem 0 0',
-                                // marginRight: '1rem',
-                                // maxHeight: '40vh',
-                                // overflowY: 'scroll',
-                                // right: 0,
-                                // backgroundColor: 'var(--background-color)',
-                                // backgroundColor: 'blue',
                                 cursor: 'pointer',
+                                // backgroundColor:'brown'
                             }}
-                            // className="absolute max-h-60 overflow-auto rounded-md bg-white divide-y"
                         >
                             {collections
                                 .filter((collection) => collection.id != 1)
                                 .map((collection, collectionIdx) => (
                                     <Listbox.Option
+                                    as='button'
                                         key={collection.id}
                                         style={{
-                                            position: 'relative',
-                                            // backgroundColor: 'red',
+                                        //     position: 'relative',
                                             width: '100%',
-
-                                            // right: '50%',
-                                            textAlign: 'center',
-                                            backgroundColor:
-                                                'var(--background-color)',
+                                        //     textAlign: 'center',
+                                        //     backgroundColor:
+                                        //         'var(--background-color)',
 
                                             borderBottom:
                                                 collectionIdx !=
@@ -76,59 +65,120 @@ export function AddSignToCollection({
                                                     ? '1px solid gray'
                                                     : undefined,
                                             padding: '0.8rem 0.8rem',
-                                            // borderRadius: '10px',
-                                            outline:
-                                                '1px solid var(--main-text-color)',
-                                            boxShadow: 'var(--card-box-shadow)',
+                                        //     outline:
+                                        //         '1px solid var(--main-text-color)',
+                                        //     boxShadow: 'var(--card-box-shadow)',
                                         }}
-                                        value={collection.id}
+                                        value={updateKey}
                                         onClick={() => {
-                                            setIcon('rotate_right')
+                                            // setIcon('rotate_right')
+                                            const currentId = collection.id
+                                            setIcons((old) => {
+                                                old[currentId] = 'rotate_right'
+                                                return old
+                                            })
                                             addSignToCollection({
                                                 signId: id,
                                                 collectionId: collection.id,
                                             }).then((res) => {
                                                 if (res.status == 'OK') {
-                                                    setIcon('check')
+                                                    setIcons((old) => {
+                                                        old[currentId] = 'check'
+                                                        return old
+                                                    })
+                                                    setUpdateKey((old) => old+1)
+                                                    // setIcon('check')
+                                                    // setTimeout(() => {
+                                                    //     setIcon('add')
+                                                    // }, 5000)
                                                 } else {
-                                                    setIcon('error')
+                                                    setIcons((old) => {
+                                                        old[currentId] = 'error'
+                                                        return old
+                                                    })
+
+                                                    // setIcon('error')
                                                 }
                                             })
+                                            queryClient.invalidateQueries(['signs'])
                                         }}
                                     >
-                                        {({ selected }) => (
-                                            <>
-                                                <span
-                                                    onClick={() => {
-                                                        addSignToCollection({
-                                                            signId: id,
-                                                            collectionId:
-                                                                collection.id,
-                                                        })
-                                                        setIcon('check')
-                                                    }}
-                                                    className={`block truncate ${
-                                                        selected
-                                                            ? 'font-medium'
-                                                            : 'font-normal'
-                                                    }`}
-                                                    style={
-                                                        {
-                                                            // backgroundColor: 'red',
-                                                        }
-                                                    }
-                                                >
-                                                    {collection.name}
+                                        {({ selected, active }) => (
+                                            <div key={collection.id}
+                                            style={{display:'flex',justifyContent:'space-between', alignItems:'center',width:'100%'}}
+                                            >
+                                                <span>
+                                                    {collection.name}{' '}
                                                 </span>
-                                            </>
+                                                    <span key={icons[collection.id]} className="material-icons">
+                                                        {icons[collection.id]}
+
+                                                        {/* {icon} */}
+                                                        
+                                                    </span>
+                                            </div>
                                         )}
                                     </Listbox.Option>
                                 ))}
+                            {/* <Listbox.Option value={'lol'}>
+                                {({ selected }) => (
+                                    <>
+                                        <span
+                                            onClick={() => {
+                                                const el =
+                                                    document.getElementById(
+                                                        'new-collection-modal'
+                                                    )
+                                                el!.showModal()
+                                            }}
+                                        >
+                                            Nýtt táknasafn
+                                        </span>
+                                    </>
+                                )}
+                            </Listbox.Option> */}
                         </Listbox.Options>
-                        {/* </Transition> */}
-                    </div>
                 </Listbox>
-            </div>
-        </div>
+            // <dialog
+            //     style={{ border: '1px solid black', borderRadius: '10px' }}
+            //     onClick={(ev) => {
+            //         const dialog = document.getElementById(
+            //             'new-collection-modal'
+            //         ) as HTMLDialogElement
+            //         if (ev.target == dialog) {
+            //             dialog.close()
+            //         }
+            //     }}
+            //     id="new-collection-modal"
+            // >
+            //     <form method="dialog">
+            //         <button>x</button>
+            //     </form>
+            //     <h3>Nýtt táknasafn</h3>
+            //     <form
+            //         onSubmit={(ev) => {
+            //             createCollection({
+            //                 userId: 3,
+            //                 collectionName: ev.currentTarget.name.value,
+            //             })
+            //             navigate({ search: (old) => ({ ...old }) })
+
+            //             // queryClient.invalidateQueries()
+            //             // queryClient.invalidateQueries({
+            //             //     queryKey: ['user'],
+            //             // })
+            //             // ev.preventDefault()
+            //             // console.log('form!', ev.currentTarget.name.value)
+            //         }}
+            //     >
+            //         <input
+            //             type="text"
+            //             name="name"
+            //             id="name"
+            //             placeholder="Nafn"
+            //         />
+            //         <button type="submit">Staðfesta</button>
+            //     </form>
+            // </dialog>
     )
 }

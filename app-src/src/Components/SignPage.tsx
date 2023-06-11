@@ -13,6 +13,7 @@ import './signpage.css'
 import { useEffect } from 'react'
 import { SignPlayer } from './SignPlayer'
 import { Header } from './Header'
+import { Footer } from './Footer'
 import { AddSignToCollection } from './AddSignToCollection'
 
 type MyLocationGenerics = MakeGenerics<{
@@ -217,7 +218,9 @@ function SignPage() {
                             <h2 className="sign-phrase">{sign.phrase}</h2>
                         </Link>
                         <AddSignToCollection
+                        centered
                             id={sign.id}
+                            sign={sign}
                             collections={user.collections}
                             zIndex={500}
                         />
@@ -235,11 +238,11 @@ function SignPage() {
                             {sign.efnisflokkar.map((efnisflokkur) => {
                                 return (
                                     <div key={efnisflokkur}>
-                                        <Link
+                                        {/* <Link
                                             to={`/efnisflokkar/${efnisflokkur}`}
-                                        >
-                                            {efnisflokkur}
-                                        </Link>
+                                        > */}
+                                        {efnisflokkur}
+                                        {/* </Link> */}
                                     </div>
                                 )
                             })}
@@ -249,9 +252,9 @@ function SignPage() {
                         <div className="sign-info-item property">
                             <h3>Orðflokkur</h3>
                             <div>
-                                <Link to={`/ordflokkar/${sign.ordflokkur}`}>
-                                    {sign.ordflokkur}
-                                </Link>
+                                {/* <Link to={`/ordflokkar/${sign.ordflokkur}`}> */}
+                                {sign.ordflokkur}
+                                {/* </Link> */}
                             </div>
                         </div>
                     )}
@@ -259,24 +262,25 @@ function SignPage() {
                         <div className="sign-info-item property">
                             <h3>Myndunarstaður</h3>
                             <div>
-                                <Link
+                                {/* <Link
                                     to={`/myndunarstadir/${sign.myndunarstadur}`}
-                                >
-                                    {sign.myndunarstadur}
-                                </Link>
+                                > */}
+                                {sign.myndunarstadur}
+                                {/* </Link> */}
                             </div>
                         </div>
                     )}
                     {sign.handform && (
                         <div className="sign-info-item property">
-                            <Link to={`/handform/${sign.handform}`}>
-                                <h3>Handform</h3>
-                                <img
+                            <h3>Handform</h3>
+                            {/* <Link to={`/handform/${sign.handform}`}> */}
+                            {sign.handform}
+
+                            {/* <img
                                     className="handform-img"
-                                    src={`/r6013/assets/itm-images/handform/${sign.handform}.png`}
-                                />
-                                <div>{sign.handform}</div>
-                            </Link>
+                                    src={`/assets/itm-images/handform/${sign.handform}.png`}
+                                /> */}
+                            {/* </Link> */}
                         </div>
                     )}
                     {sign.munnhreyfing && (
@@ -373,6 +377,7 @@ function SignPage() {
                     </div>
                 </div>
             )}
+            <Footer/>
         </div>
     )
 }

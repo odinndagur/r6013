@@ -2,8 +2,8 @@ import { useContext, useState } from 'react'
 import { ThemeContext } from './ThemeContext'
 
 //@ts-nocheck
-export function DarkModeSwitch({ setCurrentTheme }: { setCurrentTheme: any }) {
-    const currentTheme = useContext(ThemeContext)
+export function DarkModeSwitch() {
+    const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
     console.log(currentTheme)
     // const [currentTheme, setCurrentTheme] = useState(
     //     window.localStorage.getItem('theme_mode') ?? 'light'

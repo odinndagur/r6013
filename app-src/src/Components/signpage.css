@@ -67,15 +67,19 @@
     }
 }
 .sign-info-item {
-    padding: 0.3rem 0.3rem;
+    padding: 0.5rem 0.5rem;
+    border-radius: 10px;
     /* flex-basis: 50%; */
     text-align: left;
     /* border: 1px solid black; */
     /* margin: auto; */
+    /* box-shadow: var(--card-box-shadow); */
 }
 
 .handform-img {
-    max-width: 20%;
+    max-width: 40%;
+    float: right;
+    margin: auto;
 }
 
 .sign-info-item > h3 {

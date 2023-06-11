@@ -1,0 +1,9 @@
+.delete-collection-modal {
+    /* background-color: var(--accent-color); */
+    color: var(--accent-color);
+    padding: 2rem 2rem;
+}
+
+.delete-collection-modal::backdrop {
+    background-color: rgba(255, 255, 255, 0.2);
+}

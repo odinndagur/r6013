@@ -1,0 +1,23 @@
+/* #filter-modal::backdrop {
+    background-color: rgba(127, 127, 127, 0.2);
+} */
+
+#filter-modal {
+    border-radius: 10px;
+    width: min(500px, 80%);
+}
+
+#filter-modal select option::placeholder {
+    display: none;
+}
+
+#filter-modal select {
+    width: 100%;
+    padding: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+    .sign-filter-details {
+        display: none;
+    }
+}

@@ -11,6 +11,12 @@ export type MyLocationGenerics = MakeGenerics<{
             value: 'az' | 'date'
             order: 'asc' | 'desc'
         }
+        handform?: string[]
+        myndunarstadur?: string[]
+        ordflokkur?: string[]
+        efnisflokkur?: string[]
+        // signDetails?: {
+        // }
     }
 }>
 

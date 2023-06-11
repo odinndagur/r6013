@@ -1,8 +1,8 @@
 :root {
-    --background-color: #fff;
-    --main-text-color: #000;
+    --background-color: rgb(255, 255, 255);
+    --main-text-color: rgb(0, 0, 0);
     --secondary-color: rgb(240, 240, 240);
-    --accent-color: rgba(255, 132, 0, 1);
+    --accent-color: rgb(255, 132, 0);
     --card-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     --card-hover-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

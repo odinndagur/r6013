@@ -28,40 +28,45 @@ export function SelectCollection({ currentCollection, collections }) {
                         // borderRadius: '10px',
                     }}
                 >
-                    {collections.map((collection, idx: number) => (
-                        <Listbox.Option
-                            key={collection.id}
-                            style={{
-                                position: 'relative',
-                                textAlign: 'center',
-                                backgroundColor: 'var(--background-color)',
-                                borderBottom:
-                                    idx != collections.length - 1
-                                        ? '1px solid gray'
-                                        : undefined,
-                                padding: '0.8rem 0.8rem',
-                                boxShadow: 'var(--card-box-shadow)',
-                            }}
-                            value={collection.id}
-                            onClick={() => {
-                                navigate({
-                                    search: (search) => ({
-                                        ...search,
-                                        query: '',
-                                        id: collection.id,
-                                        scroll: 0,
-                                        page: 1,
-                                    }),
-                                })
-                            }}
-                        >
-                            {({ selected }) => (
-                                <>
-                                    <span>{collection.name}</span>
-                                </>
-                            )}
-                        </Listbox.Option>
-                    ))}
+                    {collections.map(
+                        (
+                            collection: { id: string; name: string },
+                            idx: number
+                        ) => (
+                            <Listbox.Option
+                                key={collection.id}
+                                style={{
+                                    position: 'relative',
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--background-color)',
+                                    borderBottom:
+                                        idx != collections.length - 1
+                                            ? '1px solid gray'
+                                            : undefined,
+                                    padding: '0.8rem 0.8rem',
+                                    boxShadow: 'var(--card-box-shadow)',
+                                }}
+                                value={collection.id}
+                                onClick={() => {
+                                    navigate({
+                                        search: (search) => ({
+                                            ...search,
+                                            query: '',
+                                            id: collection.id,
+                                            scroll: 0,
+                                            page: 1,
+                                        }),
+                                    })
+                                }}
+                            >
+                                {({ selected }) => (
+                                    <>
+                                        <span>{collection.name}</span>
+                                    </>
+                                )}
+                            </Listbox.Option>
+                        )
+                    )}
                 </Listbox.Options>
                 {/* </Transition> */}
             </Listbox>

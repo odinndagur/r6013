@@ -327,6 +327,12 @@ async function run() {
         optimalStringAlignmentDistance(a, b)
     )
 
+    // function toAscii(a: string) {
+    //     return a
+    // }
+
+    // db.create_function('to_ascii', (a: string) => toAscii(a))
+
     const currentVersion = 4
     let initDB = false
     try {
@@ -348,16 +354,52 @@ async function run() {
         initDB = true
     }
     if (initDB) {
+        // let filepathPrefix = `${import.meta.env.BASE_URL}`
+        // const filepaths = [
+        //     `${filepathPrefix}assets/sign_tables.txt`,
+        //     `${filepathPrefix}assets/sign_db_data.txt`,
+        //     `${filepathPrefix}assets/signftstableftsdata.txt`,
+        // ]
+        // for (let filepath of filepaths) {
+        //     if (filepath.includes('db_data')) {
+        //         for await (let line of makeTextFileLineIterator(filepath)) {
+        //             // console.log(line)
+        //             try {
+        //                 db.exec(line)
+        //             } catch (error) {
+        //                 console.error(error)
+        //             }
+        //         }
+        //     } else {
+        //         for await (let line of splitTextFileBySemicolon(filepath)) {
+        //             // console.log(line)
+        //             try {
+        //                 db.exec(line)
+        //             } catch (error) {
+        //                 console.error(error)
+        //             }
+        //         }
+        //     }
+        // }
+        // // db.exec()
+        // db.exec('INSERT INTO user(name,id) VALUES("ÍTM",1)')
+        // db.exec(
+        //     'INSERT INTO collection(id,user_id,name) VALUES(1,1,"Öll tákn")'
+        // )
+        // db.exec(
+        //     'INSERT INTO sign_collection(sign_id,collection_id) SELECT sign.id, 1 FROM sign'
+        // )
+        // db.exec('INSERT INTO user(name, id) VALUES("Ég",3);')
+        // db.exec(
+        //     'INSERT INTO collection(id,user_id,name) VALUES(3,3,"Mín tákn");'
+        // )
+        // db.exec(`pragma user_version = ${currentVersion}`)
         let filepathPrefix = `${import.meta.env.BASE_URL}`
-        const filepaths = [
-            `${filepathPrefix}assets/sign_tables.txt`,
-            `${filepathPrefix}assets/sign_db_data.txt`,
-            `${filepathPrefix}assets/signftstableftsdata.txt`,
-        ]
+        const filepaths = [`${filepathPrefix}assets/r6014.sqlite3.txt`]
         for (let filepath of filepaths) {
             if (filepath.includes('db_data')) {
                 for await (let line of makeTextFileLineIterator(filepath)) {
-                    // console.log(line)
+                    console.log(line)
                     try {
                         db.exec(line)
                     } catch (error) {
@@ -366,7 +408,7 @@ async function run() {
                 }
             } else {
                 for await (let line of splitTextFileBySemicolon(filepath)) {
-                    // console.log(line)
+                    console.log(line)
                     try {
                         db.exec(line)
                     } catch (error) {
@@ -376,18 +418,35 @@ async function run() {
             }
         }
         // db.exec()
-        db.exec('INSERT INTO user(name,id) VALUES("ÍTM",1)')
-        db.exec(
-            'INSERT INTO collection(id,user_id,name) VALUES(1,1,"Öll tákn")'
+        // db.exec('INSERT INTO user(name,id) VALUES("ÍTM",1)')
+        // db.exec(
+        //     'INSERT INTO collection(id,user_id,name) VALUES(1,1,"Öll tákn")'
+        // )
+        // db.exec(
+        //     'INSERT INTO sign_collection(sign_id,collection_id) SELECT sign.id, 1 FROM sign'
+        // )
+        // db.exec('INSERT INTO user(name, id) VALUES("Ég",3);')
+        // db.exec(
+        //     'INSERT INTO collection(id,user_id,name) VALUES(3,3,"Mín tákn");'
+        // )
+        // db.exec(`pragma user_version = ${currentVersion}`)
+    }
+
+    async function listDefaultCollections() {
+        let filepathPrefix = `${import.meta.env.BASE_URL}`
+        let collectionFilePath = `${filepathPrefix}default-collections.json`
+        const json_response = fetch(collectionFilePath).then((res) =>
+            res.json()
         )
-        db.exec(
-            'INSERT INTO sign_collection(sign_id,collection_id) SELECT sign.id, 1 FROM sign'
-        )
-        db.exec('INSERT INTO user(name, id) VALUES("User",3);')
-        db.exec(
-            'INSERT INTO collection(id,user_id,name) VALUES(3,3,"Mín tákn");'
-        )
-        db.exec(`pragma user_version = ${currentVersion}`)
+        // let res = []
+        // for await (let line of makeTextFileLineIterator(collectionFilePath)) {
+        //     // console.log(line)
+        //     res.push(line)
+        // }
+        return json_response
+        // `${filepathPrefix}assets/sign_tables.txt`,
+
+        // for await (let line of makeTextFileLineIterator(filepath)) {
     }
 
     registerPromiseWorker(async function (
@@ -398,6 +457,11 @@ async function run() {
                 return db.query(message.query)
             case 'exec':
                 db.exec(message.query)
+                break
+            case 'export':
+                return db.export()
+            case 'listCollections':
+                return listDefaultCollections()
         }
     })
 }

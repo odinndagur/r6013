@@ -1,6 +1,10 @@
-import { createContext } from 'react'
-export const ThemeContext = createContext(
-    window.localStorage.getItem('theme_mode') ?? 'light'
+import { createContext, useState } from 'react'
+type ThemeContextType = {currentTheme:string,setCurrentTheme:any|null}
+export const ThemeContext = createContext<ThemeContextType>({
+
+    currentTheme: window.localStorage.getItem('theme_mode') ?? 'light',
+    setCurrentTheme: undefined
+}
 )
 
 // export { ThemeContext }

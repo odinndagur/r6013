@@ -1,8 +1,6 @@
 interface absurdSqlPromiseWorker {}
 
 interface absurdSqlPromiseWorkerMessage {
-    type:
-        | 'sql'
-        | 'exec'
+    type: 'sql' | 'exec' | 'export' | 'listCollections'
     query: string | object
 }

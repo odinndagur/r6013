@@ -33,7 +33,7 @@ export function SignCollectionItem({
             <Link
                 draggable
                 className=""
-                to={`/r6013/signs/${sign.sign_id}`}
+                to={`/signs/${sign.sign_id}`}
                 search={(search) => ({
                     lastSearch: {
                         ...search,
@@ -72,6 +72,7 @@ export function SignCollectionItem({
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <AddSignToCollection
                         id={sign.sign_id}
+                        sign={sign}
                         collections={user.collections}
                     />
 
@@ -79,9 +80,10 @@ export function SignCollectionItem({
                         <button
                             className=""
                             style={{
-                                zIndex: 3,
-                                borderRadius: '10px',
+                                // zIndex: 3,
+                                // borderRadius: '10px',
                                 backgroundColor: 'rgba(255,0,0,0.8)',
+                                maxWidth: '2rem',
                             }}
                             onClick={() => {
                                 console.log('deleting sign')
@@ -89,7 +91,7 @@ export function SignCollectionItem({
                                     signId: sign.sign_id,
                                     collectionId: currentCollection,
                                 })
-                                queryClient.invalidateQueries(queryKey)
+                                queryClient.invalidateQueries()
                             }}
                         >
                             <span className="material-icons">remove</span>

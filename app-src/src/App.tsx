@@ -10,6 +10,7 @@ import {
     getUserById,
     getRandomSign,
     searchPagedCollectionByIdRefactor,
+    listHandforms,
 } from './db'
 import {
     ReactLocation,
@@ -22,14 +23,16 @@ import PlaceholderScreen from './Components/PlaceholderScreen'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppNavBar } from './Components/AppNavBar'
-import { Handform } from './Components/Handform'
 import { DarkModeSwitch } from './Components/DarkModeSwitch'
 import { NotFound } from './Components/NotFound'
-import SignWikiCredits from './Components/SignWikiCredits'
 import { CollectionsPage } from './Components/CollectionsPage'
 import { RandomSign } from './Components/RandomSign'
 import { SignCollectionPage } from './Components/SignCollectionPage'
 import { MyLocationGenerics } from './Components/Generics'
+import { RawSql } from './Components/RawSql'
+import { GetCollections } from './Components/GetCollections'
+import { Footer } from './Components/Footer'
+import { Header } from './Components/Header'
 
 const reactLocation = new ReactLocation()
 
@@ -43,6 +46,12 @@ const queryClient = new QueryClient({
 })
 
 function App() {
+    const [standalone, setStandalone] = useState(false)
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setStandalone(true)
+        }
+    })
     const [promiseWorkerLoaded, setPromiseWorkerLoaded] = useState(false)
     const [currentTheme, setCurrentTheme] = useState(
         window.localStorage.getItem('theme_mode') ?? 'light'
@@ -51,7 +60,7 @@ function App() {
         const intervalID = setInterval(() => {
             console.log('callback yo')
             try {
-                query('select * from sign limit 5').then((res: any) => {
+                query('select * from band_member limit 5').then((res: any) => {
                     if (res[0]) {
                         clearInterval(intervalID)
                         setPromiseWorkerLoaded(true)
@@ -71,38 +80,24 @@ function App() {
     return (
         <Suspense>
             <QueryClientProvider client={queryClient}>
-                <ThemeContext.Provider value={currentTheme}>
+                <ThemeContext.Provider
+                    value={{ currentTheme, setCurrentTheme }}
+                >
                     <Router
                         location={reactLocation}
-                        basepath="r6013"
+                        basepath="/"
                         // defaultLinkPreloadMaxAge={Infinity}
                         // defaultPendingElement={<PlaceholderScreen />}
                         // defaultLoaderMaxAge={Infinity}
                         routes={[
                             {
                                 path: '/',
-                                element: <SignCollectionPage />,
-
-                                loader: async ({
-                                    search,
-                                }: {
-                                    search: MyLocationGenerics['Search']
-                                }) => ({
-                                    signCollection:
-                                        await searchPagedCollectionByIdRefactor(
-                                            {
-                                                collectionId: search.id ?? 1,
-                                                page: search.page ?? 1,
-                                                searchValue: search.query ?? '',
-                                                orderBy: search.orderBy ?? {
-                                                    value: 'az',
-                                                    order: 'asc',
-                                                },
-                                            }
-                                        ),
-                                    user: await getUserById(3),
-                                }),
-                                loaderMaxAge: 0,
+                                element: (
+                                    <Navigate
+                                        to={'collection'}
+                                        search={{ id: 1 }}
+                                    />
+                                ),
 
                                 // loader: async ({ search }) => ({
                                 //     signs: await searchPagedCollectionById({
@@ -122,7 +117,6 @@ function App() {
                                     {
                                         //search: (search) => 'id' in search,
                                         element: <SignCollectionPage />,
-
                                         loader: async ({
                                             search,
                                         }: {
@@ -143,13 +137,16 @@ function App() {
                                                             },
                                                     }
                                                 ),
-                                            user: await getUserById(3),
+                                            user: await queryClient.fetchQuery({
+                                                queryFn: () => getUserById(3),
+                                                queryKey: ['user'],
+                                            }),
+                                            handforms: await listHandforms(),
                                         }),
                                         loaderMaxAge: 0,
                                     },
                                 ],
                             },
-                            { path: 'handforms', element: <Handform /> },
                             {
                                 path: 'random',
                                 element: <RandomSign />,
@@ -286,14 +283,22 @@ function App() {
                                 loaderMaxAge: 0,
                             },
                             {
+                                path: 'sql',
+                                element: <RawSql />,
+                            },
+                            {
+                                path: 'default-collections',
+                                element: <GetCollections />,
+                            },
+                            {
                                 // Passing no route is equivalent to passing `path: '*'`
                                 element: <NotFound />,
                             },
                         ]}
                     >
                         <Outlet />
-                        <AppNavBar type="footer" />
-                        <div
+                        {/* <AppNavBar type="footer" /> */}
+                        {/* <div
                             className="dark-mode-switch-container"
                             style={{
                                 position: 'fixed',
@@ -304,10 +309,54 @@ function App() {
                             }}
                         >
                             <DarkModeSwitch setCurrentTheme={setCurrentTheme} />
-                            {/* <ReactLocationDevtools /> */}
-                        </div>
+                        </div> */}
+
+                        <dialog
+                            id="app-save-modal"
+                            onClick={(ev) => {
+                                const dialog = document.getElementById(
+                                    'app-save-modal'
+                                ) as HTMLDialogElement
+                                if (ev.target == dialog) {
+                                    dialog.close()
+                                }
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    padding: '2rem',
+                                    maxWidth: '70vw',
+                                }}
+                            >
+                                <form method="dialog" style={{}}>
+                                    <button style={{ maxWidth: '2rem' }}>
+                                        x
+                                    </button>
+                                </form>
+                                <div>
+                                    <h3>Vista app á síma</h3>
+                                    <p>
+                                        Ef þú vilt vista síðuna sem app á
+                                        símanum þínum geturðu gert eftirfarandi:
+                                    </p>
+                                    <p>
+                                        <b>iPhone:</b> Valið „share“ takkann og
+                                        ýtt á Add to home screen.
+                                    </p>
+                                    <p>
+                                        <b>Android:</b> Sumir símar birta
+                                        skilaboð sem bjóða þér að „installa“
+                                        appinu. Á öðrum þarftu að velja share
+                                        takkann og annað hvort „Install app“ eða
+                                        „Add to home screen“.
+                                    </p>
+                                </div>
+                            </div>
+                        </dialog>
                     </Router>
-                    <SignWikiCredits />
                 </ThemeContext.Provider>
             </QueryClientProvider>
         </Suspense>

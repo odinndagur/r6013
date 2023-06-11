@@ -1,15 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Pagination } from './Pagination'
-import { Listbox, Transition } from '@headlessui/react'
-import {
-    addSignToCollection,
-    getCollectionById,
-    getSignByIdJson,
-    getUserById,
-    searchPagedCollectionById,
-    searchPagedCollectionByIdRefactor,
-} from '../db'
-import { AddSignToCollection } from './AddSignToCollection'
+import { searchPagedCollectionByIdRefactor } from '../db'
 import {
     Link,
     useSearch,
@@ -24,6 +15,8 @@ import { SignCollectionGenerics, SignGenerics } from './Generics'
 import { MyLocationGenerics } from './Generics'
 import { SignCollectionItem } from './SignCollectionItem'
 import { SelectCollection } from './SelectCollection'
+import { SignFilter } from './SignFilter'
+import { Footer } from './Footer'
 
 export function SignCollectionPage() {
     const queryClient = useQueryClient()
@@ -124,10 +117,14 @@ export function SignCollectionPage() {
         ],
         queryFn: () =>
             searchPagedCollectionByIdRefactor({
-                searchValue: searchValue ?? '',
+                searchValue: search.query ?? '',
                 collectionId: search.id ?? 1,
                 page: search.page ?? 1,
                 orderBy: search.orderBy ?? { order: 'asc', value: 'az' },
+                handform: search.handform,
+                ordflokkur: search.ordflokkur,
+                efnisflokkur: search.efnisflokkur,
+                myndunarstadur: search.myndunarstadur,
             }),
 
         staleTime: 0,
@@ -182,11 +179,22 @@ export function SignCollectionPage() {
                         )}
                     </div>
                 </div>
-                <div className="search">
+
+                <div
+                    className="search"
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '1rem',
+                    }}
+                >
                     <input
                         onChange={(event) => handleSearch(event.target.value)}
                         type="search"
                         placeholder="Leita að tákni"
+                        value={searchValue}
+                        // style={{ height: '100%' }}
                         // ref={inputRef}
                     />
                 </div>
@@ -206,7 +214,7 @@ export function SignCollectionPage() {
                     {data.signs.map((sign) => {
                         return (
                             <SignCollectionItem
-                                key={sign.id}
+                                key={sign.sign_id}
                                 sign={sign}
                                 user={user}
                                 currentCollection={search.id}
@@ -220,16 +228,20 @@ export function SignCollectionPage() {
                             />
                         )
                     })}
-                    <Pagination
-                        offset={data.offset}
-                        totalPages={data.totalPages}
-                        totalSignCount={data.totalSignCount}
-                        updatePage={updatePage}
-                        limit={data.limit}
-                        currentPage={page}
-                    />
+                    {data.totalSignCount > 40 &&
+                        page != data.totalPages - 1 && (
+                            <Pagination
+                                offset={data.offset}
+                                totalPages={data.totalPages}
+                                totalSignCount={data.totalSignCount}
+                                updatePage={updatePage}
+                                limit={data.limit}
+                                currentPage={page}
+                            />
+                        )}
                 </div>
             )}
+            <Footer />
         </>
     )
 }

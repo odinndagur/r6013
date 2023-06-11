@@ -1,9 +1,9 @@
 :root {
-    --background-color: #212121;
+    --background-color: rgb(33, 33, 33);
     /* --background-color: #252525; */
     --main-text-color: rgba(255, 255, 255, 0.9);
     --secondary-color: rgb(50, 50, 50);
-    --accent-color: rgba(237, 125, 34, 1);
+    --accent-color: rgb(237, 125, 34);
     --card-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
     --card-hover-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
 }

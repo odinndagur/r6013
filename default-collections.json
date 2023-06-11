@@ -1,0 +1,31 @@
+[
+    {
+        "name": "Dagar",
+        "signs": [
+            "Mánudagur",
+            "Þriðjudagur",
+            "Miðvikudagur",
+            "Fimmtudagur",
+            "Föstudagur",
+            "Laugardagur",
+            "Sunnudagur"
+        ]
+    },
+    {
+        "name": "Mánuðir",
+        "signs": [
+            "Janúar",
+            "Febrúar",
+            "Mars",
+            "Apríl",
+            "Maí",
+            "Júní",
+            "Júlí",
+            "Ágúst",
+            "September",
+            "Október",
+            "Nóvember",
+            "Desember"
+        ]
+    }
+]

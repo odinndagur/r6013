@@ -1,5 +1,6 @@
 import { OrderBy } from './OrderBy'
 import { SelectPage } from './SelectPage'
+import { SignFilter } from './SignFilter'
 
 export function Pagination({
     offset,
@@ -40,6 +41,7 @@ export function Pagination({
     return (
         <>
             <div
+                key={currentPage}
                 className=""
                 style={{
                     padding: '0rem 1rem',
@@ -52,6 +54,7 @@ export function Pagination({
                     Sýni tákn {totalSignCount > 0 ? offset + 1 : 0}-
                     {offset + signCountOnPage} af {totalSignCount}.
                 </div>
+                <SignFilter />
                 <div>
                     <OrderBy />
                 </div>
