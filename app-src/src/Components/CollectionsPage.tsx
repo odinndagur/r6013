@@ -40,14 +40,6 @@ export function CollectionsPage() {
 
     const [editingName, setEditingName] = useState(false)
 
-    const onKeyUpEditName = (ev: KeyboardEvent) => {
-        if (ev.key === 'Enter') {
-            setEditingName(false)
-            console.log('lololololol')
-        }
-        ev.stopPropagation()
-    }
-
     function handleSubmit(ev: FormEvent) {
         console.log(ev)
         ev.preventDefault()
@@ -459,7 +451,7 @@ export function CollectionsPage() {
                     Vista mín gögn sem sqlite3 gagnasafn.
                 </button>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }

@@ -2,6 +2,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { ThemeContext } from './Components/ThemeContext'
 import SignPage from './Components/SignPage'
 import HomePage from './Components/Home'
+import { VideoListPage } from './Components/VideoListPage'
 import {
     query,
     getSignByPhrase,
@@ -92,12 +93,7 @@ function App() {
                         routes={[
                             {
                                 path: '/',
-                                element: (
-                                    <Navigate
-                                        to={'collection'}
-                                        search={{ id: 1 }}
-                                    />
-                                ),
+                                element: <VideoListPage />,
 
                                 // loader: async ({ search }) => ({
                                 //     signs: await searchPagedCollectionById({

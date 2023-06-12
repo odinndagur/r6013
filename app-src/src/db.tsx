@@ -114,7 +114,6 @@ const deleteCollection = async ({ collectionId }: { collectionId: number }) => {
 // left join collection as multiCollection
 // on multiCollection.id = sign_collection.collection_id
 
-
 const getSignByIdJson = async (id: number) => {
     console.log('getting sign by id with json: ' + id)
     const stmt = `
@@ -754,7 +753,6 @@ const searchPagedCollectionByIdRefactor = async ({
         searchValue = searchValue.substring(0, searchValue.length - 1)
     }
 
-
     const selectClauseJSON = `
         SELECT 
             distinct json_object(
@@ -901,7 +899,6 @@ const searchPagedCollectionByIdRefactor = async ({
         `
     }
 
-
     DB_CONSOLE_LOGS && console.log(stmt)
     let result: {
         sign_id: number
@@ -914,8 +911,13 @@ const searchPagedCollectionByIdRefactor = async ({
         in_collection?: boolean
         sign_count?: number
     }[] = await query(stmt)
-    result = result.map(res => {
-        return {...res,collections: res.collections.split(',').map(collection => Number(collection))}
+    result = result.map((res) => {
+        return {
+            ...res,
+            collections: res.collections
+                .split(',')
+                .map((collection) => Number(collection)),
+        }
     })
     // result = result.map(res => {
     //     console.log(JSON.parse(res.sign))
@@ -944,6 +946,46 @@ const searchPagedCollectionByIdRefactor = async ({
         limit,
         collection_name,
     }
+}
+
+const searchBands = async ({ searchQuery }: { searchQuery: string }) => {
+    const result = await query(`
+        select * from band where name like "%${searchQuery}%"
+    `)
+    DB_CONSOLE_LOGS && console.log(result)
+    return result
+}
+
+export const searchVideos = async ({
+    searchQuery,
+}: {
+    searchQuery: string
+}) => {
+    const result = await query(`
+
+            select distinct json_object(
+                'band',band.name,
+                'members', json_group_array(distinct json_object('name',person.name,'id',person.id)),
+                'video_id',video.id,
+                'show_id',video.show_id,
+                'url',video.url,
+                'band_id',video.band_id,
+                'venue',venue.venue_name,
+                'date',show.date
+
+        ) AS video_json
+        FROM video
+        JOIN band ON video.band_id = band.id
+        LEFT JOIN band_member ON band_member.band_id = band.id
+        LEFT JOIN person ON band_member.member_id = person.id
+        LEFT JOIN show ON video.show_id = show.id
+        LEFT JOIN venue ON venue.id = show.venue_id
+        group by video.id
+        --where name like "%${searchQuery}%"
+    `)
+    DB_CONSOLE_LOGS && console.log(JSON.parse(result[0].video_json))
+    return result.map((res) => JSON.parse(res.video_json))
+    JSON.parse(result[0].video_json)
 }
 
 const getRandomSign = async () => {
@@ -1016,4 +1058,5 @@ export {
     exportDB,
     listDefaultCollections,
     createCollectionFromJson,
+    searchBands,
 }

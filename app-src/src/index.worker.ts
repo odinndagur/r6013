@@ -337,7 +337,7 @@ async function run() {
     let initDB = false
     try {
         console.log('try')
-        db.exec('select * from sign_fts limit 5')
+        db.exec('select * from band_member limit 5')
         const res = db.query('pragma user_version')
         const user_version = res[0].user_version
         console.log('pragma user version', user_version, currentVersion)
@@ -399,7 +399,7 @@ async function run() {
         for (let filepath of filepaths) {
             if (filepath.includes('db_data')) {
                 for await (let line of makeTextFileLineIterator(filepath)) {
-                    console.log(line)
+                    // console.log(line)
                     try {
                         db.exec(line)
                     } catch (error) {
@@ -408,7 +408,7 @@ async function run() {
                 }
             } else {
                 for await (let line of splitTextFileBySemicolon(filepath)) {
-                    console.log(line)
+                    // console.log(line)
                     try {
                         db.exec(line)
                     } catch (error) {
