@@ -14,7 +14,7 @@ export default defineConfig({
             devOptions: {
                 enabled: true,
             },
-            base: '/',
+            base: '/r6013',
             manifest: {
                 name: 'R6013',
                 short_name: 'R6013',
