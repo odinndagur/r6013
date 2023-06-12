@@ -1,12 +1,12 @@
 import { Navigate, useMatch } from '@tanstack/react-location'
 
-export function RandomSign() {
+export function RandomVideo() {
     const {
-        data: { sign },
+        data: { videoId },
     } = useMatch()
     return (
         <Navigate
-            to={`/signs/${sign.id}`}
+            to={`/videos/${videoId}`}
             replace
             search={(old) => ({ ...old })}
         />

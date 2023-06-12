@@ -3,16 +3,7 @@ import { ThemeContext } from './Components/ThemeContext'
 import SignPage from './Components/SignPage'
 import HomePage from './Components/Home'
 import { VideoListPage } from './Components/VideoListPage'
-import {
-    query,
-    getSignByPhrase,
-    getSignByIdJson,
-    searchPagedCollectionById,
-    getUserById,
-    getRandomSign,
-    searchPagedCollectionByIdRefactor,
-    listHandforms,
-} from './db'
+import { query, getVideoById, getRandomVideo } from './db'
 import {
     ReactLocation,
     Router,
@@ -26,14 +17,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppNavBar } from './Components/AppNavBar'
 import { DarkModeSwitch } from './Components/DarkModeSwitch'
 import { NotFound } from './Components/NotFound'
-import { CollectionsPage } from './Components/CollectionsPage'
-import { RandomSign } from './Components/RandomSign'
-import { SignCollectionPage } from './Components/SignCollectionPage'
+import { RandomVideo } from './Components/RandomVideo'
 import { MyLocationGenerics } from './Components/Generics'
 import { RawSql } from './Components/RawSql'
 import { GetCollections } from './Components/GetCollections'
 import { Footer } from './Components/Footer'
 import { Header } from './Components/Header'
+import { VideoPage } from './Components/VideoPage'
 
 const reactLocation = new ReactLocation()
 
@@ -94,190 +84,38 @@ function App() {
                             {
                                 path: '/',
                                 element: <VideoListPage />,
-
-                                // loader: async ({ search }) => ({
-                                //     signs: await searchPagedCollectionById({
-                                //         searchValue: search.query ?? '',
-                                //         collectionId: search.collection ?? 1,
-                                //         page: search.page ?? 1,
-                                //     }),
-                                // }),
                             },
                             {
                                 path: 'home',
                                 element: <HomePage />,
                             },
                             {
-                                path: 'collection',
-                                children: [
-                                    {
-                                        //search: (search) => 'id' in search,
-                                        element: <SignCollectionPage />,
-                                        loader: async ({
-                                            search,
-                                        }: {
-                                            search: MyLocationGenerics['Search']
-                                        }) => ({
-                                            signCollection:
-                                                await searchPagedCollectionByIdRefactor(
-                                                    {
-                                                        collectionId:
-                                                            search.id ?? 1,
-                                                        page: search.page ?? 1,
-                                                        searchValue:
-                                                            search.query ?? '',
-                                                        orderBy:
-                                                            search.orderBy ?? {
-                                                                value: 'az',
-                                                                order: 'asc',
-                                                            },
-                                                    }
-                                                ),
-                                            user: await queryClient.fetchQuery({
-                                                queryFn: () => getUserById(3),
-                                                queryKey: ['user'],
-                                            }),
-                                            handforms: await listHandforms(),
-                                        }),
-                                        loaderMaxAge: 0,
-                                    },
-                                ],
-                            },
-                            {
                                 path: 'random',
-                                element: <RandomSign />,
-                                // element: async () =>
-                                //     getRandomSign().then((signId) => (
-                                //         <Navigate
-                                //             to={`/signs/${signId}`}
-                                //             key={signId}
-                                //         />
-                                //     )),
-                                // loaderMaxAge: 0,
+                                element: <RandomVideo />,
 
                                 loader: async () => ({
-                                    sign: await getSignByIdJson(
-                                        await getRandomSign()
-                                    ),
+                                    videoId: await getRandomVideo(),
                                 }),
                             },
                             {
-                                path: 'signs',
+                                path: 'videos',
                                 children: [
                                     {
                                         path: '/',
-                                        element: <SignCollectionPage />,
-                                        loader: async ({
-                                            search,
-                                        }: {
-                                            search: MyLocationGenerics['Search']
-                                        }) => ({
-                                            signCollection:
-                                                await searchPagedCollectionByIdRefactor(
-                                                    {
-                                                        collectionId:
-                                                            search.id ?? 1,
-                                                        page: search.page ?? 1,
-                                                        searchValue:
-                                                            search.query ?? '',
-                                                        orderBy:
-                                                            search.orderBy ?? {
-                                                                value: 'az',
-                                                                order: 'asc',
-                                                            },
-                                                    }
-                                                ),
-                                            user: await getUserById(3),
-                                        }),
-                                        loaderMaxAge: 0,
-                                    },
-                                    {
-                                        path: 'phrase',
-                                        children: [
-                                            {
-                                                path: ':phrase',
-                                                element: <SignPage />,
-                                                loader: async ({ params }) => ({
-                                                    sign: await getSignByPhrase(
-                                                        decodeURIComponent(
-                                                            params.phrase
-                                                        )
-                                                    ),
-                                                    user: await getUserById(3),
-                                                }),
-                                            },
-                                        ],
+                                        element: <VideoListPage />,
                                     },
                                     {
                                         path: ':id',
-                                        element: <SignPage />,
+                                        element: <VideoPage />,
                                         loader: async ({ params }) => ({
-                                            sign: await getSignByIdJson(
-                                                Number(params.id)
+                                            video: await getVideoById(
+                                                params.id
                                             ),
-                                            user: await getUserById(3),
                                         }),
                                     },
                                 ],
                             },
-                            {
-                                path: 'sign',
-                                id: 'signByPhrase',
-                                element: <SignPage />,
-                                search: (search) => {
-                                    return 'phrase' in search
-                                },
-                                loader: async ({ search }) => ({
-                                    sign: await getSignByPhrase(
-                                        String(search.phrase)
-                                    ),
-                                    user: await getUserById(3),
-                                }),
-                            },
-                            {
-                                path: 'sign',
-                                id: 'signById',
-                                element: <SignPage />,
-                                search: (search) => {
-                                    return 'id' in search
-                                },
-                                loader: async ({ search }) => ({
-                                    sign: await getSignByIdJson(search.id),
-                                    user: await getUserById(3),
-                                }),
-                            },
-                            // {
-                            //     path: 'settings',
-                            //     element: <SettingsPage />,
-                            //     loader: async () => ({
-                            //         user: await getUserById(3),
-                            //     }),
-                            // },
-                            {
-                                path: 'settings',
 
-                                element: <CollectionsPage />,
-                                loader: async () => ({
-                                    user: await getUserById(3),
-                                }),
-                                loaderMaxAge: 0,
-                            },
-                            {
-                                path: 'leit',
-                                element: <SignCollectionPage />,
-                                loader: async ({ search }) => ({
-                                    signCollection:
-                                        await searchPagedCollectionById({
-                                            collectionId:
-                                                Number(search.id) ?? 1,
-                                            page: Number(search.page) ?? 1,
-                                            searchValue:
-                                                String(search.query) ?? '',
-                                        }),
-                                    user: await getUserById(3),
-                                }),
-                                loaderMaxAge: 0,
-                            },
                             {
                                 path: 'sql',
                                 element: <RawSql />,

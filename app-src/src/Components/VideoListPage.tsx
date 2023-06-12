@@ -5,6 +5,7 @@ import { searchBands, searchVideos } from '../db'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { YoutubePlayer } from './YoutubePlayer'
 import { VideoListItem } from './VideoListItem'
+import { Footer } from './Footer'
 
 export function VideoListPage() {
     const navigate = useNavigate()
@@ -12,7 +13,7 @@ export function VideoListPage() {
     const [searchValue, setSearchValue] = useState('')
     useEffect(() => {
         setTimeout(() => {
-            setSearchValue(String(searchParams.query) ?? '')
+            setSearchValue(searchParams.query ?? '')
         }, 50)
     }, [])
     const handleSearch = (searchValue: string) => {
@@ -45,7 +46,7 @@ export function VideoListPage() {
                     <input
                         onChange={(event) => handleSearch(event.target.value)}
                         type="search"
-                        placeholder="Leita að tákni"
+                        placeholder="Leita að myndbandi"
                         value={searchValue}
                         // style={{ height: '100%' }}
                         // ref={inputRef}
@@ -54,8 +55,9 @@ export function VideoListPage() {
             </Header>
             {videos &&
                 videos.map((video) => {
-                    return <VideoListItem video={video} />
+                    return <VideoListItem key={video.video_id} video={video} />
                 })}
+            <Footer />
         </>
     )
 }

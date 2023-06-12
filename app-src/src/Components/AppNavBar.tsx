@@ -62,12 +62,12 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
         //            name: 'Leit',
         //            type: type,
         //        },
-        {
-            route: '/settings',
-            icon: 'account_box',
-            name: 'Táknasöfn',
-            type: type,
-        },
+        // {
+        //     route: '/settings',
+        //     icon: 'account_box',
+        //     name: 'Táknasöfn',
+        //     type: type,
+        // },
         {
             route: '/random',
             icon: 'shuffle',

@@ -1,13 +1,26 @@
+import { useEffect, useState } from 'react'
 import { YoutubePlayer } from './YoutubePlayer'
 
 export function VideoListItem({ video }) {
+    const [dateString, setDateString] = useState('')
+    useEffect(() => {
+        const date = new Date(video.date)
+        // console.log(video.date, date)
+        setDateString(date.toLocaleDateString('is', { dateStyle: 'medium' }))
+    }, [])
     return (
-        <div>
+        <div
+            style={{
+                padding: '2rem',
+                margin: '1rem',
+                boxShadow: 'var(--card-box-shadow)',
+            }}
+        >
             <h2>
                 {video.band} @ {video.venue}
             </h2>
-            <i>{video.date}</i>
-            <ul>
+            <i>{dateString}</i>
+            {/* <ul>
                 <li>
                     <h3>Meðlimir</h3>
                     <ul>
@@ -28,7 +41,7 @@ export function VideoListItem({ video }) {
                     <h3>Date</h3>
                     {video.date}
                 </li>
-            </ul>
+            </ul> */}
             <YoutubePlayer videoId={video.url} />
         </div>
     )

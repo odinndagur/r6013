@@ -36,6 +36,9 @@ export function YoutubePlayer(props: any) {
     const [thumbnailUrl, setThumbnailUrl] = useState(hiResUrl)
 
     const playVideo = () => {
+        if (!isVisible) {
+            return
+        }
         if (isSafari) {
             target.playVideo()
             setShowThumbnail(false)
@@ -109,7 +112,7 @@ export function YoutubePlayer(props: any) {
                     <img
                         src={thumbnailUrl}
                         // src={`https://img.youtube.com/vi/${props.videoId}/maxresdefault.jpg`}
-                        alt={`Myndband sem sýnir táknið ${props.title}`}
+                        // alt={`Myndband sem sýnir táknið ${props.title}`}
                         // onError={(ev) => (ev.target.src = altUrl)}
 
                         onLoadCapture={(ev) => {
